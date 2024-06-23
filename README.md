@@ -15,7 +15,7 @@ O arquivo principal contém a lógica do jogo, incluindo a criação do personag
 Classes e Arquivos de Cabeçalho
 
 * ## Classe "classe":
-   * Define os atributos e métodos relacionados às classes dos personagens. As classes incluem:
+   * Define os atributos(Vida,ataque fisico,ataque magico,resistência física,resistência magica) e métodos relacionados às classes dos personagens. As classes incluem:
    * Mago
    * Guerreiro
    * Ladino
