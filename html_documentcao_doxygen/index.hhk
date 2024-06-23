@@ -1,0 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD></HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="FrameName" value="right">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classclasse.html"><param name="Name" value="classe"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_gerador_de_entidades.html"><param name="Name" value="GeradorDeEntidades"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_inventario.html"><param name="Name" value="Inventario"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classitem.html"><param name="Name" value="item"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_personagem.html"><param name="Name" value="Personagem"></OBJECT>
+</UL>
+</BODY>
+</HTML>
