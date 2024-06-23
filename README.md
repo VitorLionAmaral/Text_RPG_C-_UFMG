@@ -1,3 +1,5 @@
+<img src=""C:\Users\mathe\OneDrive\Área de Trabalho\elegordop2.png">
+
 # RNG RPG
 
 RNG RPG é um jogo de RPG baseado em turnos, onde a sorte desempenha um papel crucial em todas as ações. Prepare-se para enfrentar monstros, coletar itens e subir de nível, tudo isso enquanto escolhe as melhores estratégias para sobreviver.
