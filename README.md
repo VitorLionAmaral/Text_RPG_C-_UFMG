@@ -1,4 +1,3 @@
-<img src=""C:\Users\mathe\OneDrive\Área de Trabalho\elegordop2.png">
 
 # RNG RPG
 
