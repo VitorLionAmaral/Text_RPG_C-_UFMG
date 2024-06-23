@@ -53,6 +53,8 @@ Classes e Arquivos de Cabeçalho
  * Cria um inventário onde vão ser armazenados os itens obtidos.
  * Dá a opção para o usuário apagar os itens armazenados.
 
+> dificuldades : esse projeto foi feito inteiramente por 2 pessoas, Vitor Leão Amaral e Matheus Alberto dos Santos Rodrigues.
+
 > Notas : 
 
 > O jogo utiliza system("cls") para limpar a tela no Windows e system("clear") para sistemas Unix.
