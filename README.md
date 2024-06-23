@@ -5,6 +5,8 @@
 
 # RNG RPG
 
+> dificuldades : **esse projeto foi feito inteiramente por 2 pessoas, Vitor Leão Amaral e Matheus Alberto dos Santos Rodrigues**.
+
 RNG RPG é um jogo de RPG baseado em turnos, onde a sorte desempenha um papel crucial em todas as ações. Prepare-se para enfrentar monstros, coletar itens e subir de nível, tudo isso enquanto escolhe as melhores estratégias para sobreviver.
 
 
@@ -53,7 +55,7 @@ Classes e Arquivos de Cabeçalho
  * Cria um inventário onde vão ser armazenados os itens obtidos.
  * Dá a opção para o usuário apagar os itens armazenados.
 
-> dificuldades : esse projeto foi feito inteiramente por 2 pessoas, Vitor Leão Amaral e Matheus Alberto dos Santos Rodrigues.
+
 
 > Notas : 
 
