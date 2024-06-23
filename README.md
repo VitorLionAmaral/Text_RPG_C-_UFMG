@@ -45,9 +45,8 @@ Classes e Arquivos de Cabeçalho
   * Responsável por gerar monstros e itens aleatórios. Inclui listas de nomes e adjetivos para criar combinações únicas de itens e monstros.
   
 * ## Classe "Inventario":
-  *Cria um inventario onde vão ser guardados os itens obtidos.
-  *Dê a opção para o usario apagar os itens.
-   
+ * Cria um inventario onde vão ser guardados os itens obtidos.
+ * Dê a opção para o usario apagar os itens.
 
 > Notas : 
 
