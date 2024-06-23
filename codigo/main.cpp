@@ -173,11 +173,11 @@ limparTela();
     limparTela();
     
   
-    gerador-> nivelDeDificuldade = 10 ;
+    gerador-> nivelDeDificuldade = 0 ;
 
 while(1){
     monstro = gerador->gerarMonstro();
-    gerador-> nivelDeDificuldade +=10;
+    gerador-> nivelDeDificuldade +=5;
     printComDelay("Voce encontrou um monstro!!:", 30);
     printComDelay("Seus atributos atuais:\n------------------------", 30);
     jogador->imprimirAtributos();
