@@ -2,6 +2,7 @@
 <div align="center">
 <img src="https://github.com/VitorLionAmaral/Text_RPG_C-_UFMG/assets/163683980/319bb27e-2823-48c3-b37c-55ea02f5d981" width="300px" />
 </div>
+
 # RNG RPG
 
 RNG RPG é um jogo de RPG baseado em turnos, onde a sorte desempenha um papel crucial em todas as ações. Prepare-se para enfrentar monstros, coletar itens e subir de nível, tudo isso enquanto escolhe as melhores estratégias para sobreviver.
