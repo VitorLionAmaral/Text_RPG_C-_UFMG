@@ -46,7 +46,7 @@ Classes e Arquivos de Cabeçalho
   
 * ## Classe "Inventario":
  * Cria um inventario onde vão ser guardados os itens obtidos.
- * Dá a opção para o usario apagar os itens.
+ * Dá a opção para o usuário apagar os itens.
 
 > Notas : 
 
