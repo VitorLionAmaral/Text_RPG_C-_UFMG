@@ -73,3 +73,8 @@ Personagem* GeradorDeEntidades::gerarMonstro() {
 
 
 
+
+
+
+
+
