@@ -5,7 +5,7 @@
 
 # RNG RPG
 
-> dificuldades : **esse projeto foi feito inteiramente por 2 pessoas, Vitor Leão Amaral e Matheus Alberto dos Santos Rodrigues**.
+> dificuldades : ****.
 
 RNG RPG é um jogo de RPG baseado em turnos, onde a sorte desempenha um papel crucial em todas as ações. Prepare-se para enfrentar monstros, coletar itens e subir de nível, tudo isso enquanto escolhe as melhores estratégias para sobreviver.
 
