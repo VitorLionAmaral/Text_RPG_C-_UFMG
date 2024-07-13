@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -245,8 +244,16 @@ int main() {
             cout << "--------------------------------\n";
             printComDelay("O que você faz?\n[1] Atacar fisicamente\n[2] Atacar magicamente\n[3] Defender físico\n[4] Defender mágico", 30);
             cin >> escolha;
+            if (std::cin.fail() ||(  escolha != 1 && escolha != 2 && escolha != 4 && escolha != 3)) {
+            std::cin.clear(); // Limpa o erro
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora a entrad)
+            escolha = 1;
+            
+            }
+
             limparTela();
             cout << "-------------------------------------------------\n";
+            cout << "Em sua falta de precisao, recoreu a seus metodos mais simples e atacou fisicamente" << endl;
             escolherAcao(escolha, monstro, jogador);
             monstro->imprimirAtributos();
             turnoDoMostro(monstro, jogador);
