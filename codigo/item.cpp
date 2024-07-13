@@ -27,3 +27,4 @@ void item::imprimirBonus(){
     cout << "Resistência Física: " << res_FIS_bonus << std::endl;
     cout << "Resistência Mágica: " << res_Mag_bonus << std::endl;
 }
+
