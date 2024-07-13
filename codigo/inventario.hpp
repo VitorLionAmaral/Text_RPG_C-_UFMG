@@ -13,6 +13,9 @@ public:
     void removerItem(int index);
     void exibirInventario();
     void limparInventario();
+    int getTotalItens() const;
+    item getItem(int index) const; 
 };
 
 #endif
+
