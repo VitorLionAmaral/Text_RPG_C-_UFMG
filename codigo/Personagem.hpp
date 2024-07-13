@@ -20,6 +20,7 @@ public:
     
     Personagem(std::string nome,int idade,std::string sexo,std::string raca,classe trabalho);
     void addItems(item it);
+    void removerItem(item it);
     void AtacarFisico(Personagem *monstro);
     void AtacarMagico(Personagem *monstro);
     void DefenderFisico();
