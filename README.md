@@ -12,6 +12,7 @@ RNG RPG é um jogo de RPG baseado em turnos, onde a sorte desempenha um papel cr
 
 ## Funcionalidades
  * Criação de Personagem: O jogador pode criar um personagem escolhendo o nome, idade, sexo, raça e classe.
+ * Poder mudar a aleatoriedade do jogo, mudando completamente cada partida.
  * Combate: O jogo possui um sistema de combate por turnos onde o jogador pode atacar fisicamente, atacar magicamente ou se defender contra monstros gerados aleatoriamente.
  * Geração de Itens: Itens são gerados aleatoriamente com diferentes bônus e podem ser equipados pelo jogador para melhorar seus atributos.
  * Sistema de Nível: O jogador sobe de nível após derrotar monstros, aumentando seus atributos básicos.
@@ -51,8 +52,9 @@ Classes e Arquivos de Cabeçalho
 * ## Classe "GeradorDeEntidades":
   * Responsável por gerar monstros e itens aleatórios. Inclui listas de nomes e adjetivos para criar combinações únicas de itens e monstros.
   
-* ## Classe "Inventrio":
+* ## Classe "Inventário":
  * Cria um inventário onde vão ser armazenados os itens obtidos.
+ * Determina um limite de itens que pode se ter no inventário.
  * Dá a opção para o usuário apagar os itens armazenados.
 
 
@@ -60,7 +62,7 @@ Classes e Arquivos de Cabeçalho
 > Notas : 
 
 > O jogo utiliza system("cls") para limpar a tela no Windows e system("clear") para sistemas Unix.
-> Os atributos dos personagens aumentam em 2 pontos ao subir de nível.
+> Os atributos dos personagens aumentam em 20 pontos ao subir de nível.
 > Os atributos do monstros são gerados aleatoriamente, mas o nível de dificuldade multiplica os atributos continuamente.
 > A defesa aumenta a resistência temporariamente e é resetada no próximo turno de ataque.
 > Divirta-se jogando RNG RPG e que a sorte esteja ao seu lado!
