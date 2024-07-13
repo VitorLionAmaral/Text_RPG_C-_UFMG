@@ -9,7 +9,7 @@
 #include "item.hpp"
 #include "inventario.hpp"
 #include <cstdlib>
-
+#include <vector>
 
 using namespace std;
 
@@ -24,28 +24,26 @@ void limparTela() {
 void printComDelay(const string& texto, int atraso_ms) {
     for (char c : texto) {
         cout << c << flush;
-        
         this_thread::sleep_for(chrono::milliseconds(atraso_ms));
     }
     cout << endl;
 }
 
- 
 void subirNivel(Personagem& personagem) {
-   int vidaAtual = personagem.trabalho.Get_VIDA();
-    personagem.trabalho.Set_VIDA(vidaAtual + 2);
+    int vidaAtual = personagem.trabalho.Get_VIDA();
+    personagem.trabalho.Set_VIDA(vidaAtual + 20);
 
     int ataqueFisicoAtual = personagem.trabalho.Get_ataque_FIS();
-    personagem.trabalho.Set_ataque_FIS(ataqueFisicoAtual + 2);
+    personagem.trabalho.Set_ataque_FIS(ataqueFisicoAtual + 20);
 
     int ataqueMagicoAtual = personagem.trabalho.Get_ataque_MAG();
-    personagem.trabalho.Set_ataque_MAG(ataqueMagicoAtual + 2);
+    personagem.trabalho.Set_ataque_MAG(ataqueMagicoAtual + 20);
 
     int resistenciaFisicaAtual = personagem.trabalho.Get_res_FIS();
-    personagem.trabalho.Set_res_FIS(resistenciaFisicaAtual + 2);
+    personagem.trabalho.Set_res_FIS(resistenciaFisicaAtual + 20);
 
     int resistenciaMagicaAtual = personagem.trabalho.Get_res_Mag();
-    personagem.trabalho.Set_res_Mag(resistenciaMagicaAtual + 2);
+    personagem.trabalho.Set_res_Mag(resistenciaMagicaAtual + 20);
     
     printComDelay("Você subiu de nível! Seus atributos aumentaram.", 40); 
 }
@@ -55,63 +53,116 @@ classe guereiro = classe("guereiro",150,60,20,20,10);
 classe ladino = classe("ladino",80,150,20,10,10);
 classe tanker = classe("tanker",200,30,30,15,15);
 
+void escolherAcao(int n, Personagem * monstro, Personagem *jogador) {
+    if(n == 1) jogador->AtacarFisico(monstro);
+    if(n == 2) jogador->AtacarMagico(monstro);
+    if(n == 3) jogador->DefenderFisico();
+    if(n == 4) jogador->DefenderMagico();
+}
 
-void escolherAcao(int n, Personagem * monstro,Personagem *jogador){
-    if(n==1){ jogador->AtacarFisico(monstro);}
-    if(n==2){ jogador->AtacarMagico(monstro);}
-    if(n==3){ jogador->DefenderFisico();}
-    if(n==4){jogador->DefenderMagico();}
-    
-    
-}
-void turnoDoMostro(Personagem * monstro,Personagem *jogador){
-    int n = rand()%2;
-       int vidaAtual = jogador->trabalho.Get_VIDA();
-    if(n==1){
+void turnoDoMostro(Personagem *monstro, Personagem *jogador) {
+    int vidaInicial = jogador->trabalho.Get_VIDA();
+    int dano;
+
+    int n = rand() % 2;
+    if (n == 1) {
         monstro->AtacarFisico(jogador);
-        cout << "\nVoce tomou um ataque Fisico e agora \n |voce tem " <<  jogador->trabalho.Get_VIDA()  <<" De vida|\n";
-        jogador->imprimirAtributos();
-     return;   
-    }
+        dano = vidaInicial - jogador->trabalho.Get_VIDA();
+        cout << "\nVocê tomou um ataque Físico de " << dano << " de dano.\n";
+    } else {
         monstro->AtacarMagico(jogador);
-        cout << "\nVoce tomou um ataque Magico e agora \n |voce tem "  << jogador->trabalho.Get_VIDA()  << " De vida|\n";
-        jogador->imprimirAtributos();
-    return;
-    
+        dano = vidaInicial - jogador->trabalho.Get_VIDA();
+        cout << "\nVocê tomou um ataque Mágico de " << dano << " de dano.\n";
+    }
+
+    jogador->imprimirAtributos();
 }
-classe escolherClasse(int n){
-    if(n == 1){
-        return mago;
-    }
-    if(n==2){
-        return guereiro;
-    }
-    if(n==4){
-        return tanker;
-    }
+
+classe escolherClasse(int n) {
+    if(n == 1) return mago;
+    if(n == 2) return guereiro;
+    if(n == 4) return tanker;
     return ladino;
 }
 
+void removerItemDoInventario(GeradorDeEntidades* gerador, Personagem* jogador) {
+    gerador->inventario.exibirInventario();
+    
+    int indice;
+    cout << "Digite o número do item que deseja remover (1 a " << gerador->inventario.getTotalItens() << "): ";
+    cin >> indice;
+    
+    if (cin.fail()) {
+        cin.clear(); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Entrada inválida. Nenhum item removido.\n";
+        return;
+    }
+    
+    if (indice >= 1 && indice <= gerador->inventario.getTotalItens()) {
+        item it = gerador->inventario.getItem(indice - 1);
+        jogador->removerItem(it);  // Atualizar atributos do personagem
+        gerador->inventario.removerItem(indice - 1); 
+        cout << "Item removido do inventário.\n";
+    } else {
+        cout << "Índice inválido. Nenhum item removido.\n";
+    }
+}
+
+
 int main() {
-      srand(12312341);
-    string nomePersonagem = "------";
-    int idade  = 28;
-    string sexo = "M";
-    string raca = "elfo";
-    int vida, ataqueFIS, ataqueMAG, resFIS, resMAG;
+    
+    limparTela(); 
+    int semente;
+
+    string nomePersonagem;
+    int idade;
+    string sexo;
+    string raca;
     string resposta;
    
-   limparTela(); 
+    limparTela(); 
     printComDelay("Bem Vindo ao RNG RPG onde a sorte tem que estar ao seu lado!", 40);
-    printComDelay("Para comecar, primeiro digite o nome do seu personagem: ", 50);
-    getline(cin, nomePersonagem);
-    printComDelay("Digite a idade do personagem: ", 40);
-    cin >> idade;
-    cin.ignore();
-    printComDelay("Digite o sexo do personagem: ", 40);
-    getline(cin, sexo);
-    printComDelay("Digite a raça do personagem: ", 40);
-    getline(cin, raca);
+    cout << "Dessa forma entre com um numero, será seu numero da sorte, nao se engane esse numero ira ditar o seu percurso" << endl;
+    cin >> semente;
+    
+    if (std::cin.fail()) {
+            std::cin.clear(); // Limpa o erro
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora a entrad)
+            semente = 123112341;
+    }
+ 
+     string confirmacaoPerfil;   
+    do {
+        printComDelay("Para começar, primeiro digite o nome do seu personagem: ", 50);
+        std::getline(std::cin, nomePersonagem);
+
+        printComDelay("Digite a idade do personagem: ", 40);
+        while (!(std::cin >> idade)) {
+            std::cin.clear(); // Limpa o estado de erro de cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora a entrada inválida
+            printComDelay("Por favor, digite um número para a idade do personagem: ", 40);
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpa o buffer de entrada
+
+        printComDelay("Digite o sexo do personagem: ", 40);
+        std::getline(std::cin, sexo);
+
+        printComDelay("Digite a raça do personagem: ", 40);
+        std::getline(std::cin, raca);
+        Recomecar:
+        std::cout << std::endl;
+        printComDelay("Confirme seu personagem, não poderá alterar seus dados posteriormente:", 40);
+        std::cout << "Nome: " << nomePersonagem << std::endl; 
+        std::cout << "Idade: " << idade << std::endl;
+        std::cout << "Sexo: " << sexo << std::endl;
+        std::cout << "Raça: " << raca << std::endl;
+
+        std::cout << "Caso queira redefinir, escreva 'Redefinir': ";
+        std::getline(std::cin, confirmacaoPerfil);
+
+    } while (confirmacaoPerfil == "Redefinir");
+    limparTela();
     printComDelay("Escolha sua classe", 40);
     cout << "[1]---------------------------\n";
     mago.imprimirAtributos();
@@ -119,18 +170,31 @@ int main() {
     guereiro.imprimirAtributos();
     cout << "[3]---------------------------\n";
     ladino.imprimirAtributos();
-    cout << "[4] --------------------------\n";
+    cout << "[4]---------------------------\n";
     tanker.imprimirAtributos();
-    int escolha;
-    cin >> escolha;
-    classe classejogador  =   escolherClasse(escolha);
+    int escolha = 5;
+    do{
+        cin >> escolha;
+        if (std::cin.fail()) {
+            std::cin.clear(); // Limpa o erro
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora a entrada inválida
+            printComDelay("Para sobreviver no labirinto você precisa escolher uma classe", 40); 
+            }else if(escolha < 1 || escolha > 4){
+                printComDelay("Para sobreviver no labirinto voce precisa escolher uma classe", 40);
+                printComDelay("Escolha uma classe (1-4): ", 20);
+                std::cout << "1 = Mago" << endl;
+                std::cout << "2 = Guerreiro" << endl;
+                std::cout << "3 = Ladino" << endl;
+                std::cout << "4 = Tanker" << endl;
+        }
+    }while( escolha  < 1 || escolha > 4 );
+ 
+    classe classejogador = escolherClasse(escolha);
     
-    Personagem* jogador = new Personagem(nomePersonagem,idade,sexo,raca,classejogador);
+    Personagem* jogador = new Personagem(nomePersonagem, idade, sexo, raca, classejogador);
 
+    limparTela();
 
-limparTela();
-
-  
     Personagem* monstro;
     item* equipamento;
     GeradorDeEntidades* gerador = new GeradorDeEntidades();
@@ -145,91 +209,119 @@ limparTela();
         cout << "---------------------------\n";
     }
     
-
     cout << "Escolha um item para ficar (1 a 10): ";
-    cin >> escolha;
-    limparTela();
 
-    if (escolha >= 1 && escolha <= 10) {
-        item* itemEscolhido = itensGerados[escolha - 1];
-        cout << "Item escolhido:\n";
-        jogador->addItems(*itemEscolhido);
-        itemEscolhido->imprimirBonus();
-        gerador->inventario.adicionarItem(*itemEscolhido);
-        cout << "Item adicionado ao inventário.\n";
-        for (size_t i = 0; i < itensGerados.size(); ++i) {
-            if (i != escolha - 1) {
-                delete itensGerados[i];
-            }
+    escolha =0;
+    do{
+        cin >> escolha;
+        if (std::cin.fail()) {
+            std::cin.clear(); // Limpa o erro
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora a entrada inválida
+            printComDelay("Para sobreviver no labirinto você precisara de um equipamento", 40); 
+            }else if(escolha < 1 || escolha >10 ){
+                printComDelay("Para sobreviver no labirinto voce precisara de um equipamento", 40);
+
         }
-        itensGerados.clear();
-
-    } else {
-        cout << "Escolha inválida.\n";
-    }
-    
+    }while( escolha  < 1 || escolha > 10 );
     
     this_thread::sleep_for(chrono::milliseconds(2000));
     limparTela();
     
-  
-    gerador-> nivelDeDificuldade = 0 ;
+    gerador->nivelDeDificuldade = 10;
 
-while(1){
-    monstro = gerador->gerarMonstro();
-    gerador-> nivelDeDificuldade +=5;
-    printComDelay("Voce encontrou um monstro!!:", 30);
-    printComDelay("Seus atributos atuais:\n------------------------", 30);
-    jogador->imprimirAtributos();
-    cout << "----------------------------------\n";
-    monstro->imprimirAtributos();
-   do{
-       cout << "--------------------------------\n";
-       printComDelay("O que voce Faz?\n [1] Atacar fiscamente, \n [2] Atacar Magicamente \n [3] Defender Fisico \n [4] Defender Magicamente", 30);
-       cin >> escolha;
-       limparTela();
-       cout << "-------------------------------------------------\n";
-       escolherAcao(escolha,monstro,jogador);
-       monstro->imprimirAtributos();
-       turnoDoMostro(monstro,jogador);
-       if(jogador->trabalho.Get_VIDA() == 0){
-           printComDelay("Fim de jogo", 30);
-         return 0;
-       }
 
-   }while(monstro->trabalho.Get_VIDA()>0); {
-       limparTela();
-       printComDelay("Parabéns, voce derrotou o monstro", 30);
-       subirNivel(*jogador);
-       jogador->trabalho.Set_VIDA(jogador->trabalho.Get_VIDA() + 10);
-       jogador->imprimirAtributos();
-       item* itemGerado = gerador->gerarItem();
-       this_thread::sleep_for(chrono::milliseconds(2000));
-       gerador->inventario.exibirInventario();
-       limparTela();
-       printComDelay("Você achou a " + itemGerado->nome + "deseja equipar?: \n [1] Sim \n [2] Não", 30);
-       itemGerado->imprimirBonus();
-        cin>> escolha;
-        if(escolha ==1){
-            jogador->addItems(*itemGerado);
+    string recomecarJogo;
+    int andar = 0;
+    while (1) {
+        monstro = gerador->gerarMonstro();
+        gerador->nivelDeDificuldade += 10;
+        printComDelay("Você encontrou um monstro!!", 30);
+        printComDelay("Seus atributos atuais:\n------------------------", 30);
+        jogador->imprimirAtributos();
+        cout << "----------------------------------\n";
+        monstro->imprimirAtributos();
+        
+        do {
+            cout << "--------------------------------\n";
+            printComDelay("O que você faz?\n[1] Atacar fisicamente\n[2] Atacar magicamente\n[3] Defender físico\n[4] Defender mágico", 30);
+            cin >> escolha;
+            limparTela();
+            cout << "-------------------------------------------------\n";
+            escolherAcao(escolha, monstro, jogador);
+            monstro->imprimirAtributos();
+            turnoDoMostro(monstro, jogador);
+            if (jogador->trabalho.Get_VIDA() == 0) {
+                printComDelay("Fim de jogo", 30);
+                return 0;
+            }
+            
+        } while (monstro->trabalho.Get_VIDA() > 0);
+        
+        limparTela();
+        andar += 1;
+        if( andar == 10){
+            printComDelay("Voce conquistou a Masmorra !!!", 60);
+            cout << nomePersonagem << ",gostaria de jogar novamente ?" << endl;
+            cin >> recomecarJogo;
+            if(recomecarJogo !="Sim"){
+                return 0;
+            }else{
+                goto Recomecar;
+            }
         }
+            
+            
+        printComDelay("Parabéns, você derrotou o monstro", 30);
+        subirNivel(*jogador);
+        jogador->trabalho.Set_VIDA(jogador->trabalho.Get_VIDA() + 30);
+        jogador->imprimirAtributos();
+        item* itemGerado = gerador->gerarItem();
         this_thread::sleep_for(chrono::milliseconds(2000));
         limparTela();
-   }}
-   
-  /* int indice;
-    cout << "Quer remover algum item do inventário? (sim ou não): ";
-    cin >> resposta;
-    if (resposta == "sim") {
-        cout << "Digite o número do item que deseja remover: ";
-        cin >> indice;
-        gerador->inventario.removerItem(indice - 1);
-    } else if (resposta == "não") {
-        cout << "Nenhum item removido." << endl;
-    } else {
-        cout << "Resposta inválida. Nenhum item removido." << endl;
+        printComDelay("Você achou a " + itemGerado->nome + ". Deseja equipar?\n[1] Sim\n[2] Não", 30);
+        itemGerado->imprimirBonus();
+        
+       int indice_repeticao = 0;
+       escolha = 0;
+       do{
+            cin >> escolha;
+            if (std::cin.fail()) {
+                std::cin.clear(); // Limpa o erro
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignora a entrada inválida
+                printComDelay("Escolha entre: \n [1] Pegar o item \n [2]Abandonar o item" , 40);
+            }else{
+                indice_repeticao +=1;
+                cout << "Pense bem caso nao escolha, " << itemGerado->nome << " será descartado" << endl;
+                escolha = 2;
+            }   
+        }while(escolha  < 1 || escolha > 2);
+        
+
+        if (escolha == 1) {
+            if (gerador->inventario.getTotalItens() >= 10) {
+                cout << "Seu inventário está cheio. Você deve remover um item antes de adicionar um novo.\n";
+                removerItemDoInventario(gerador, jogador);
+                cout << "Deseja tentar adicionar o novo item novamente?\n[1] Sim\n[2] Não\n";
+                cin >> escolha;
+                if (escolha == 1) {
+                    jogador->addItems(*itemGerado);
+                    gerador->inventario.adicionarItem(*itemGerado);
+                    cout << "Novo item adicionado ao inventário.\n";
+                } else {
+                    cout << "Você optou por não adicionar o novo item.\n";
+                }
+            } else {
+                jogador->addItems(*itemGerado);  
+                gerador->inventario.adicionarItem(*itemGerado);
+                cout << "Novo item adicionado ao inventário.\n";
+            }
+        }
+
+        this_thread::sleep_for(chrono::milliseconds(2000));
+        limparTela();
     }
-      */
+    
     delete gerador; 
     return 0;
 }
+
