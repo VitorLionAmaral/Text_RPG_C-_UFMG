@@ -12,8 +12,9 @@ Personagem::Personagem(std::string nome,int idade,std::string sexo,std::string r
     this->sexo = sexo;
     this->raca = raca;
     this->trabalho  = trabalho;
+    this->defendeuF = 0;  
+    this->defendeuM = 0;
 }
-
 
 void Personagem::addItems(item it){
     this->trabalho.Set_VIDA(this->trabalho.Get_VIDA() + it.vida_bonus);
@@ -23,63 +24,74 @@ void Personagem::addItems(item it){
     this->trabalho.Set_res_Mag(this->trabalho.Get_res_Mag() + it.res_Mag_bonus);
 }
 
-void Personagem::AtacarFisico(Personagem *monstro){
-    if(this-> defendeuF ==1) {
-        defendeuF = 0 ;
+void Personagem::removerItem(item it) {
+    this->trabalho.Set_VIDA(this->trabalho.Get_VIDA() - it.vida_bonus);
+    this->trabalho.Set_ataque_FIS(this->trabalho.Get_ataque_FIS() - it.ataque_FIS_bonus);
+    this->trabalho.Set_ataque_MAG(this->trabalho.Get_ataque_MAG() - it.ataque_MAG_bonus);
+    this->trabalho.Set_res_FIS(this->trabalho.Get_res_FIS() - it.res_FIS_bonus);
+    this->trabalho.Set_res_Mag(this->trabalho.Get_res_Mag() - it.res_Mag_bonus);
+}
+
+void Personagem::AtacarFisico(Personagem *monstro) {
+    if (this->defendeuF == 1) {
+        defendeuF = 0;
         this->trabalho.Set_res_FIS(this->trabalho.Get_res_FIS() - 10);
     }
-    if(this->defendeuM==1){
+    if (this->defendeuM == 1) {
         defendeuM = 0;
         this->trabalho.Set_res_Mag(this->trabalho.Get_res_Mag() - 10);
     }
-    
-    int num = rand()%100;
-    
-    if(monstro->trabalho.Get_res_FIS() < num){
+
+    int num = rand() % 100;
+    int chance_de_ataque = this->trabalho.Get_ataque_FIS() - monstro->trabalho.Get_res_FIS();
+
+    if (num < chance_de_ataque) {
         monstro->trabalho.Set_VIDA(monstro->trabalho.Get_VIDA() - this->trabalho.Get_ataque_FIS());
-        return;
+        cout << "\n" + monstro->nome + " sofreu um ataque físico!\n";
+    } else {
+        cout << "\n" + monstro->nome + " Defendeu o ataque físico!\n";
     }
-    cout << "\n" + monstro->nome + "  Defendeu!\n";
 }
-void Personagem::AtacarMagico(Personagem *monstro){
-     if(this-> defendeuF ==1) {
-        defendeuF = 0 ;
+
+void Personagem::AtacarMagico(Personagem *monstro) {
+    if (this->defendeuF == 1) {
+        defendeuF = 0;
         this->trabalho.Set_res_FIS(this->trabalho.Get_res_FIS() - 10);
     }
-    if(this->defendeuM==1){
+    if (this->defendeuM == 1) {
         defendeuM = 0;
         this->trabalho.Set_res_Mag(this->trabalho.Get_res_Mag() - 10);
     }
-     int num = rand()%100;
-     if(monstro->trabalho.Get_res_Mag() < num){
+
+    int num = rand() % 100;
+    int chance_de_ataque = this->trabalho.Get_ataque_MAG() - monstro->trabalho.Get_res_Mag();
+
+    if (num < chance_de_ataque) {
         monstro->trabalho.Set_VIDA(monstro->trabalho.Get_VIDA() - this->trabalho.Get_ataque_MAG());
-    
-         return;
-     } cout << monstro->nome + " \nDefendeu!\n";
-    
+        cout << "\n" + monstro->nome + " sofreu um ataque mágico!\n";
+    } else {
+        cout << monstro->nome + " Defendeu o ataque mágico!\n";
+    }
 }
 
-void Personagem::DefenderFisico(){
-    if(this->defendeuF==0){
-        this->defendeuF=1;
+void Personagem::DefenderFisico() {
+    if (this->defendeuF == 0) {
+        this->defendeuF = 1;
         this->trabalho.Set_res_FIS(this->trabalho.Get_res_FIS() + 10);
-        return;
+        cout << "Você está se defendendo fisicamente!\n";
+    } else {
+        cout << "Você já está se defendendo fisicamente!\n";
     }
-    
-    cout << "Você já esta se defendendo!\n";
-    return;
-    
 }
 
-
-void Personagem::DefenderMagico(){
-     if(this->defendeuM==0){
-         this->defendeuM=1;
+void Personagem::DefenderMagico() {
+    if (this->defendeuM == 0) {
+        this->defendeuM = 1;
         this->trabalho.Set_res_Mag(this->trabalho.Get_res_Mag() + 10);
-        return;
+        cout << "Você está se defendendo magicamente!\n";
+    } else {
+        cout << "Você já está se defendendo magicamente!\n";
     }
-        cout << "Você já esta se defendendo!\n";
-        return;
 }
 
 void Personagem::imprimirAtributos() {
@@ -90,3 +102,4 @@ void Personagem::imprimirAtributos() {
     cout << "Resistência Física: " << trabalho.Get_res_FIS() << std::endl;
     cout << "Resistência Mágica: " << trabalho.Get_res_Mag() << std::endl;
 }
+
