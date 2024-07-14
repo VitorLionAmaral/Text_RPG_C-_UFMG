@@ -62,6 +62,7 @@ Resistencia mágica: 15
   * Idade
   * Sexo
   * Raça
+
 Os campos de "Nome", "Idade", "Sexo" e "Raça" não interferem na jogabilidade do jogador, sendo criadas apenas para criar imersão do jogador com seu personagem. Ainda assim, é permitido essa costumização ao jogador, tendo uma etapa de confirmação posteriormente ao começo de cada partida.    
   * Classe
 As classes definim os status base iniciais do jogador, não havendo um diferencial de crescimento por nível entre as classes, ou limitações de quais itens cada classe pode equipar.
