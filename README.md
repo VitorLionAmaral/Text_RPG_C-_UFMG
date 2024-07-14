@@ -109,7 +109,7 @@ No inicio da partida após o jogador escolher sua classe será gerado de maneira
 
 * Limite de inventário
 
-O inventário limita o jogado até 10 itens.
+O inventário limita o jogador até 10 itens.
 
  * Dá a opção para o usuário apagar os itens armazenados.
 
